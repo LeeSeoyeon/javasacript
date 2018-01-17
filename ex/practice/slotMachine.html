@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale = 1.0">
+    <title>SLOT MACHINE</title>
+    <style>
+*{ margin: 0 0; }
+body { position: relative; }
+
+.machine { position: relative; border: 1px solid black; margin: 0 auto; }
+.machine > div { padding: 5px 5px; }
+.root { border: 1px solid black; width: 300px; top: 50px; }
+.top { text-align: center; }
+.body { text-align: center; font-size: 3em; height: 120px; }
+.body .slot { display: inline-block; width: 22%; height: 100px; line-height: 100px; border: 1px solid black; }
+.bottom { text-align: center; }
+
+.result { margin-top: 10px; overflow: auto; }
+
+    </style>
+  </head>
+  <body>
+
+    <div class="machine root">
+      <div class="machine" id="statistics">
+        <p>try count : <span id="maxLife">0</span></p>
+        <hr>
+        <p>1st count : <span id="first">0</span> </p>
+        <p>2nd count : <span id="second">0</span> </p>
+        <p>3rd count : <span id="third">0</span> </p>
+        <p>4th count : <span id="fourth">0</span> </p>
+      </div>
+
+      <div class="machine top">
+        SeedMoney : <number id="seedMoney">1000</number>won
+      </div>
+      <div class="machine body">
+        <div id="slot1" class="slot">
+        </div>
+        <div id="slot2" class="slot">
+        </div>
+        <div id="slot3" class="slot">
+        </div>
+      </div>
+      <div class="machine bottom">
+        <button id="gameStart">Spin bar</button>
+      </div>
+      <div class="machine result" id="result">
+      </div>
+    </div>
+
+  </body>
+
+<script>
+document.getElementById("gameStart").onclick = ()=>gameStart();
+
+let winNumber={
+	"777":8,"666":4,"555": 2,"776":1,"767":1,"677":1,"775":1,"757":1,"577":1
+}
+
+const initGame =(continu)=>{
+	if(continu=="no") return;
+	if(continu){
+		document.getElementById("seedMoney").innerText = 1000;
+	}else if(!continu){
+		alert("You Bankruptcy!");
+		document.getElementById("gameStart").value="GameOver";
+		document.getElementById("gameStart").onclick=null;
+	}
+}
+//숫자를 받으면 1~max까지의 난수를 생성
+const randomNumber=(max)=> Math.ceil(Math.random()*max + 1);
+
+//슬롯 넘버에 숫자를 표시한다.
+const processGame=(ranNum1,ranNum2, ranNum3)=>{
+	let result;
+	document.getElementById("slot1").innerText = ranNum1;
+	result=ranNum1;
+	document.getElementById("slot2").innerText = ranNum2;
+	result+=ranNum2;
+	document.getElementById("slot3").innerText = ranNum3;
+	result+=ranNum3;
+
+	return winNumber.result;
+}
+
+const changeView=(result)=>{
+	let batting = 100;
+
+	switch(result){
+		case 8:
+			document.getElementById("first").innerText += 1;
+			batting=batting*8-batting;
+		break;
+		case 4:
+			document.getElementById("second").innerText += 1;
+			batting=batting*4-batting;
+		break;
+		case 2:
+			document.getElementById("third").innerText += 1;
+			batting=batting*2-batting;
+		break;
+		case 1:
+			document.getElementById("fourth").innerText += 1;
+			batting=batting*1-batting;
+		break;
+		default:
+			batting*=(-1);
+
+	}
+
+	let seedMoney =  document.getElementById("seedMoney").innerHTML;
+	seedMoney =eval(seedMoney)+batting;
+	document.getElementById("seedMoney").innerText=seedMoney;
+	return seedMoney;
+
+}
+
+const continueGame=(seedMoney)=>seedMoney<=0?confirm("Do you continue"):"no";
+
+
+const gameStart =()=>{initGame(continueGame(changeView(processGame(randomNumber(),randomNumber(),randomNumber()))));}
+
+</script>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale = 1.0">
+    <title>Function Programmming</title>
+</head>
+<body>
+  <section id="gridTable">
+  </section>
+</body>
+
+<script>
+const data = {data:
+  [
+    {구분:'kdna',약재명:'herb', 1:'T',2:'T',3:'A',4:'A',5:'C',6:'C',7:'G',8:'G',9:'T',10:'A',11:'G',12:'C',13:'C',14:'T',15:'A',16:'A',17:'C',18:'G',19:'G',20:'C',21:'C',22:'C',23:'G',24:'G',25:'G',26:'A',27:'C',28:'T',29:'A',30:'A',31:'C',32:'A',33:'T',34:'T'},
+    {구분:'kdna',약재명:'herb', 1:'T',2:'T',3:'A',4:'A',5:'C',6:'C',7:'G',8:'G',9:'T',10:'A',11:'G',12:'C',13:'C',14:'T',15:'A',16:'A',17:'C',18:'G',19:'G',20:'C',21:'C',22:'C',23:'G',24:'G',25:'G',26:'A',27:'C',28:'T',29:'A',30:'A',31:'C',32:'A',33:'T',34:'T'},
+    {구분:'kdna',약재명:'herb', 1:'T',2:'T',3:'A',4:'A',5:'C',6:'C',7:'G',8:'G',9:'T',10:'A',11:'G',12:'C',13:'C',14:'T',15:'A',16:'A',17:'C',18:'G',19:'G',20:'C',21:'C',22:'C',23:'G',24:'G',25:'G',26:'A',27:'C',28:'T',29:'A',30:'A',31:'C',32:'A',33:'T',34:'T'},
+    {구분:'kdna',약재명:'herb', 1:'T',2:'T',3:'A',4:'A',5:'C',6:'C',7:'G',8:'G',9:'T',10:'A',11:'G',12:'C',13:'C',14:'T',15:'A',16:'A',17:'C',18:'G',19:'G',20:'C',21:'C',22:'C',23:'G',24:'G',25:'G',26:'A',27:'C',28:'T',29:'A',30:'A',31:'C',32:'A',33:'T',34:'T'},
+    {구분:'kdna',약재명:'herb', 1:'T',2:'T',3:'A',4:'A',5:'C',6:'C',7:'G',8:'G',9:'T',10:'A',11:'G',12:'C',13:'C',14:'T',15:'A',16:'A',17:'C',18:'G',19:'G',20:'C',21:'C',22:'C',23:'G',24:'G',25:'G',26:'A',27:'C',28:'T',29:'A',30:'A',31:'C',32:'A',33:'T',34:'T'},
+    {구분:'kdna',약재명:'herb', 1:'T',2:'T',3:'A',4:'A',5:'C',6:'C',7:'G',8:'G',9:'T',10:'A',11:'G',12:'C',13:'C',14:'T',15:'A',16:'A',17:'C',18:'G',19:'G',20:'C',21:'C',22:'C',23:'G',24:'G',25:'G',26:'A',27:'C',28:'T',29:'A',30:'A',31:'C',32:'A',33:'T',34:'T'},
+    {구분:'kdna',약재명:'herb', 1:'T',2:'T',3:'A',4:'A',5:'C',6:'C',7:'G',8:'G',9:'T',10:'A',11:'G',12:'C',13:'C',14:'T',15:'A',16:'A',17:'C',18:'G',19:'G',20:'C',21:'C',22:'C',23:'G',24:'G',25:'G',26:'A',27:'C',28:'T',29:'A',30:'A',31:'C',32:'A',33:'T',34:'T'},
+    {구분:'kdna',약재명:'herb', 1:'T',2:'T',3:'A',4:'A',5:'C',6:'C',7:'G',8:'G',9:'T',10:'A',11:'G',12:'C',13:'C',14:'T',15:'A',16:'A',17:'C',18:'G',19:'G',20:'C',21:'C',22:'C',23:'G',24:'G',25:'G',26:'A',27:'C',28:'T',29:'A',30:'A',31:'C',32:'A',33:'T',34:'T'}
+  ]}
+
+const tableSetting = function (data, columnSize, target){
+  //초기화 메소드
+  const init = () => {
+    this.data = data;
+    this.columnSize = columnSize;
+    this.maxColumn = Object.keys(this.data[0]).length;
+    this.nowColumn = 0;
+    this.target = document.getElementById(target);
+
+    this.target.innerHTML = '<div><input type="button" value="<"><input type="button" value=">"></div><div><table><thead></thead><tbody></tbody></table></div>';
+    this.leftBtn = this.target.firstChild.firstChild;
+    this.rightBtn = this.target.firstChild.lastChild;
+    this.thead = this.target.lastChild.firstChild.firstChild;
+    this.tbody = this.target.lastChild.firstChild.lastChild;
+
+    let pageMax = this.maxColumn/this.columnSize;
+
+    if(!Number.isInteger(pageMax))
+      pageMax += 1;
+
+    this.pageMax = Math.floor(pageMax) - 1;
+  }
+  //초기화
+  init();
+
+  //thead
+  let str = '<tr>';
+  let count = 0;
+  for(let val in this.data[0]){
+
+    if(count == columnSize)
+      break;
+    str += '<th style="border: 1px solid">'+ val +'</th>'
+    count++;
+  }
+  str += '</tr>';
+  this.thead.innerHTML += str;
+
+  //tbody
+  top :
+  for(let obj of this.data){
+      count = 0;
+
+      this.tbody.innerHTML += '<tr></tr>';
+      for(let val in obj){
+
+        if(count == columnSize)
+          continue top;
+
+        this.tbody.lastChild.innerHTML += '<td style="border: 1px solid">' + obj[val] + '</td>';
+
+        count++;
+      }
+  }
+
+  this.rightBtn.onclick = () =>{
+
+    if(this.nowColumn === this.pageMax)
+      this.nowColumn = this.pageMax-1;
+      return;
+
+    this.nowColumn += 1;
+
+    this.thead.innerHTML = "";
+    let str = '<tr>';
+    let count = 0;
+
+    for(let val in this.data[0]){
+      count++;
+
+      if(count <= this.nowColumn*this.columnSize)
+        continue;
+
+      if(count == (this.nowColumn+1)*this.columnSize+1)
+        break;
+      str += '<th style="border: 1px solid">'+ val +'</th>';
+      }
+      str += '</tr>';
+      this.thead.innerHTML += str;
+
+    //tbody
+    this.tbody.innerHTML = "";
+    top :
+    for(let obj of this.data){
+
+        count = 0;
+        this.tbody.innerHTML += '<tr></tr>';
+        for(let val in obj){
+          count ++;
+          if(count <= this.nowColumn*this.columnSize)
+            continue;
+
+          if(count == (this.nowColumn+1)*this.columnSize+1)
+            continue top;
+
+          this.tbody.lastChild.innerHTML += '<td style="border: 1px solid">' + obj[val] + '</td>';
+
+        }
+    }
+
+  }
+
+  this.leftBtn.onclick = () =>{
+    console.log(this.nowColumn)
+    if(this.nowColumn < 1)
+      return;
+
+    this.nowColumn -= 2;
+
+    console.log(this.nowColumn)
+
+    this.thead.innerHTML = "";
+    let str = '<tr>';
+    let count = 0;
+
+    for(let val in this.data[0]){
+      count++;
+
+      if(count <= this.nowColumn*this.columnSize)
+        continue;
+
+      if(count == (this.nowColumn+1)*this.columnSize+1)
+        break;
+      str += '<th style="border: 1px solid">'+ val +'</th>';
+      }
+      str += '</tr>';
+      this.thead.innerHTML += str;
+
+    //tbody
+    this.tbody.innerHTML = "";
+    top :
+    for(let obj of this.data){
+
+        count = 0;
+        this.tbody.innerHTML += '<tr></tr>';
+        for(let val in obj){
+          count ++;
+          if(count <= this.nowColumn*this.columnSize)
+            continue;
+
+          if(count == (this.nowColumn+1)*this.columnSize+1)
+            continue top;
+
+          this.tbody.lastChild.innerHTML += '<td style="border: 1px solid">' + obj[val] + '</td>';
+
+        }
+    }
+  }
+
+
+
+}
+
+const test = new tableSetting(data.data, 10, "gridTable");
+
+</script>
+</html>

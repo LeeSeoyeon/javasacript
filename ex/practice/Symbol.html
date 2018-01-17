@@ -1,0 +1,19 @@
+
+<script>
+
+var obj = {};
+var a = Symbol("isSymbol")
+
+obj[a] = "a";
+obj[Symbol.for("b")] = "b";
+obj["c"] = "c";
+obj.d = "d";
+obj.a ="notSymbol"
+
+for (var i in obj) {
+   console.log(i); // logs "c" and "d"
+}
+
+console.log(obj[a]);
+console.log(obj)
+</script>

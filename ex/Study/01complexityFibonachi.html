@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale = 1.0">
+    <title>피보나치 수열</title>
+  </head>
+  <body>
+    <section>
+      <input type="text" size="2" id="inputNumber">
+      <label>번째</label>
+      <input type="button" value="oop출력" id="oopBtn" onclick ="aaa">
+      <input type="button" value
+    </section>
+    <hr>
+    <section>
+        <div id="outputDisplay">
+          번호  0   1
+        </div>
+    </section>
+  </body>
+
+<script>
+
+//나름 oop
+class Fibonacci{
+
+  constructor(){
+    this.count0 = 0;
+    this.count1 = 0;
+  }
+
+  init(){
+    this.count0 = 0;
+    this.count1 = 0;
+  }
+
+  //피보나치의 0과 1의 개수를 구하는 방식을 재귀로 주어짐.
+  getFibonacci(n) {
+    if(n==0){
+      this.count0++;
+      return 0;
+    }else if(n==1){
+      this.count1++;
+      return 1;
+    }else{
+      return this.getFibonacci(n-1) + this.getFibonacci(n-2);
+    }
+  }
+
+  get getCount0(){
+    return this.count0;
+  }
+
+  get getCount1(){
+    return this.count1;
+  }
+}
+
+class Display{
+  output(n, count0, count1){
+    let display = document.getElementById("outputDisplay");
+    display.innerHTML += "<br>" + n + "\t" + count0 + "\t" + count1;
+  }
+
+  getNumber(){
+    return document.getElementById("inputNumber").value;
+  }
+}
+const display = new Display();
+const fibonacci = new Fibonacci();
+
+const aa = {aa:11};
+
+aa[0]
+aa.aa == 11 //true
+aa.bb = 22;
+
+document.getElementById("oopBtn").onclick = () => {
+      let number = display.getNumber();
+      fibonacci.getFibonacci(number);
+      display.output(number, fibonacci.getCount0, fibonacci.getCount1);
+      fibonacci.init();
+}
+
+
+//나름 함수형 프로그래밍
+
+
+</script>
+</html>

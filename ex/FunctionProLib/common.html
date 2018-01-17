@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale = 1.0">
+    <title>Function Programmming</title>
+  </head>
+  <body>
+  </body>
+<script>
+
+const map = (args, f) =>{
+  let resultArr = [];
+
+  for(let i of args){
+    resultArr.push(f(i))
+  }
+
+  return resultArr;
+}
+
+const fillter = (args, f) => {
+  let resultArr = [];
+
+  for(let i of args){
+    if(f(i)) resultArr.push(i);
+  }
+
+  return resultArr;
+}
+
+const reduce = (args, f) => {
+  let prev = args.shift();
+  let next = 0;
+
+  while(args.length != 0){
+    next = args.shift();
+    prev = f(next,prev);
+  }
+
+  return prev;
+}
+
+
+console.log(fillter([1,2,3,4], v=>v%2==0));
+console.log(map([1,2,3,4], v=>v*2));
+console.log(reduce([1,2,3,4], (a,b)=>a+b));
+
+</script>
+</html>

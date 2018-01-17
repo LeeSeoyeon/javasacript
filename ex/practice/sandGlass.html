@@ -1,0 +1,65 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale = 1.0">
+  <title>Phone Number</title>
+</head>
+
+<body>
+<section>
+  <div >
+    <input type="text" size="3" id="inputNum" value=3>
+    <input type="button" id="sandglassBtn" value="모래시계 출력">
+  </div>
+  <div>
+    <h1>모래시계 화면</h1>
+    <hr>
+    <div id="sandGlass">
+    </div>
+  </div>
+</section>
+</body>
+
+
+<script>
+//홀수 필터
+const fillter = (v, f) => {
+  for(let i of v)
+    if(f(i)) return  i;
+};
+
+//ragne 함수, 시작가 끝을 입력하면 배열을 만들어주는 함수
+const range = (start, end) => {
+  let arr = new Array();
+  if(start <= end)
+      for(let i=start; i<=end; i++)
+        arr.push(i);
+  else
+      for(let i=start; i>=end; i--)
+        arr.push(i);
+  return arr;
+}
+
+//홀수의 수를 받으면 n -> 1 -> n까지의 홀수 배열 반환
+const map = (n) => range(n,1).concat(range(2,n));
+
+//모래시계를 표현할 div id
+const sandglass = document.getElementById('sandGlass');
+
+const makeSandglass = (v) =>{
+  return (v)=> {
+    let sum = '';
+    for(let i=0; i<v; i++)
+      sum += '*'
+      sandglass.innerHTML = sum + '<br>';
+    }
+}
+
+const getInputNum = () => document.getElementById('inputNum').value*1;
+
+console.log(map(fillter([getInputNum],v=>(v%2 == 1))));
+makeSandglass()(3);
+console.log(fillter([1,2,3,4,5], v=>(v%2==1)))
+document.getElementById('sandglassBtn').onclick = () => console.log(map(fillter([getInputNum()],v=>(v%2 == 1))));
+</script>
+</html>

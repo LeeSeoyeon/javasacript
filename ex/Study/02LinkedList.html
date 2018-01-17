@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale = 1.0">
+    <title>Function Programmming</title>
+  </head>
+  <body>
+  </body>
+<script>
+const LinkedList = function (){
+  return {
+     add : (v)=>{
+
+      if(this.list == null){
+        this.list = {
+          index : 1,
+          value : v,
+          pointer : null
+        }
+        this.size = 1;
+      }else{
+        this.size += 1;
+        let temp = this.list;
+        while(temp.pointer != null){
+          temp = temp.pointer;
+        }
+        temp.pointer = {
+          index : this.size,
+          value : v,
+          pointer : null
+        }
+      }
+    },
+    delete : () => {
+      let temp = this.list;
+      for(let i=1; i<this.size-1; i++){
+        temp = temp.pointer;
+      }
+      temp.pointer = null;
+      this.size -= 1;
+    },
+    getSize : () => {
+      return this.size;
+    },
+    getList : () => this,
+    
+    deleteIndex : index => {
+      let temp1 = this.list;
+      let temp2 = this.list;
+
+      if(index == 1){
+        this.list = this.list.pointer;
+        temp1 = this.list;
+        this.size -= 1;
+        while(temp1.pointer != null){
+          temp1.index -= 1;
+          temp1 = temp1.pointer;
+        }
+        return;
+      }
+
+      while(temp1.index != (index-1)){
+        temp1 = temp1.pointer;
+      }
+
+      if(index == this.size){
+        tmep2 = null;
+        temp1.pointer = temp2;
+        this.size -= 1;
+        return;
+      }else{
+        while(temp2.index != (index+1) ){
+          temp2 = temp2.pointer;
+        }
+
+      }
+
+      temp1.pointer = temp2;
+      this.size -= 1;
+
+      while(temp2.pointer != null){
+        temp2.index -= 1;
+        temp2 = temp2.pointer;
+      }
+      temp2.index -=1;
+    }
+  }
+}
+
+let list = new LinkedList();
+
+list.add(3);
+console.log(list.getList());
+list.add(4);
+list.delete();
+console.log(list.getList());
+
+
+//예제 요세푸스 문제
+
+function jyuFun (args, index) {
+  let list = new LinkedList();
+
+  for(v of args)
+    list.add(v);
+
+    let listInfo = list.getList();
+
+  let indexNum = index;
+  while(listInfo.size > 1 || listInfo.size < 1){
+    console.log(listInfo.size)
+    if(indexNum > listInfo.size + 1){
+      indexNum = indexNum%(listInfo.size+1);
+      if(indexNum == 0)
+        indexNum == listInfo.size;
+    }
+    console.log(indexNum)
+    list.deleteIndex(indexNum);
+    indexNum += index;
+  }
+
+  return list.getList();
+}
+
+//console.log(jyuFun([3,6,2,7,5,1,4], 4));
+
+</script>
+</html>
