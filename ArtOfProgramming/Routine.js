@@ -48,72 +48,21 @@ if("Coroutine"){
     //서브루틴은 자기의 작업을 수행완료 후, 돌아갈 지점으로 돌아가기 때문이다. 그래서 이런 것들을 Coroutine이라한다.
 
     //다음과 같은 것을 구현해보자.
-    //A2B5E3426FG0ZYW3210PQ89R
-    //숫자N이 나오면 다음에 나온 문자열이 숫자든 문자든 상관없이 N+1번 반복하여 출력 후, 다음으로 넘어간다.
-    //그런데 1번째 숫자N은 다음 문자C를 N번 출력하고
+    //
+    //1번째 숫자N은 다음 문자C를 N번 출력하고
     //2번째 숫자 N은 다음 문자를 출력하지 않고,
     //3번째 숫자는 다음문자를 N-1번 출력하고
     //4번째 숫자는 다음 문자를 N+1번 출력한다고 하자.
     //=> 한걔의 루틴으로 묶을수 있지만, 4개의 알고리즘으로 동작한다고 할 때를 가정하기 위해서이다. 
     
-    //위 문제를 Subroutine으로 구현해보자.
-    if('Subroutine'){
-        function main(){ //tokennizer
-            const str = '1A2B3C4D.';
-            let cursor = 0;
-            do{
-                let char = str[cursor++], output = "";
-                if(char === '.') break; //.일경우는 프로그램을 종료
+    //coroutine이 자바스크립트에서 구현되었어있다. generator
+    //그런데 이를 어떻게 활용하고 서브루틴에 비해 어떤 이점이 있는지는 와닫지 않아서 설명을 못하겠다.
+    //이점 다중패스 알고리즘을 단일 패스 알고리즘으로 구현가능
+    //심리적 차이: 다중패스 알고리즘은 단일 패스 알고리즘보다 쉽게 작성가능한데, 코루틴을 이용하며 다중패스 알고리즘
+    //을 단일패스 알고리즘처럼 보이게 바꿀수있다.
+    //시간 차이: 속도면에서는 단일패스 알고리즘이 더 빠르다.
+    //공간차이: 단일패스 알고리즘은 프로그램이 한 메모리에 올라가잇어야하지만, 단일패스프로그램은 그 당시의 프로그램만
+    //메모리에 적재되어잇으면 된다.
+    //Lazy excution이 가능함
 
-                if(Number.isInteger(char)){
-                    output = subroutine1(char, str[cursor++]);
-                }
-                else
-                    output = char;
-                
-                subroutine2(output);
-
-            }while(cursor < str.length)
-        }
-
-        function subroutine1(num, value){ //문자열을 복사
-            let result = "";
-            for(let i=0; i<num; i++) result += value;
-            return result;
-        }
-
-        function subroutine1(num, value){ //문자열을 복사
-            return "";
-        }
-
-        function subroutine2(str){  //문자열 출력
-            console.log(str);
-        }
-    }else if('corutine'){
-        function subroutine1(num, value){ //문자열을 복사
-            let result = "";
-            for(let i=0; i<num; i++) result += value;
-            return result;
-        }
-
-        function* coroutine(){
-            const str = '1A2B3C4D.';
-            let cursor = 0;
-            do{
-                let char = str[cursor++];
-                if(char === '.') break;
-
-                if(Number.isInteger(char)){
-                    output = subroutine1(char, str[cursor++]);
-                }
-                else
-                    output = char;
-                
-                yield output;
-
-            }while(cursor < str.length);
-        }
-
-        function
-    }
 }
