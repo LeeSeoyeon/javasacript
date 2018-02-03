@@ -72,7 +72,7 @@ if('LINKED LIST'){
 
     const Model = class{
         constructor(value, left, right){
-            Object.assign(this, {value, left = (left || (left = this)), right = (right || (rigth = this))});
+            //Object.assign(this, {value, left = (left || (left = this)), right = (right || (rigth = this))});
         }
     }
 
@@ -97,7 +97,7 @@ if('LINKED LIST'){
             }
         }
 
-        get get(index){
+        get(index){
             if(index >= 0 && index <= this.length){
                 let value = this.top;
                 while(--index >= 0){
@@ -121,11 +121,53 @@ if('TOPOLOGICAL SORT'){
 
     //구현
     //입력 : 1>4, 2>4, 3>2, 3>4
-    const input = ['1>4', '2>4', '3>2', '3>4'];
-    
-    const Model = class{
-        constructor(value){
-            Object.assign(this, {value, children: []});
-        }    
+    const input = ['1>4', '2>4', '3>2', '3>4', '5>4'];
+    //잘못구현함
+    const setTree = (u, d) =>{
+        root[u] = root[u] || {};
+        root[u].indegree = root[u].indegree || 0;
+        root[u].value = u;
+        root[d] = root[d] || {};
+        root[d].indegree = root[d].indegree? root[d].indegree + 1 : 1;
+        root[d].value = d;
+        root[u].next = root[d];
     }
+
+    let root = {};
+    for(let v of input){
+        setTree(...v.split('>'));       
+    }
+    const queue = [];
+    const indegree0 = [];
+
+    const dfs = v=>{
+        let next = v;
+        do{
+            console.log(next);
+            let indegree = next.indegree;
+            if(indegree === 0){
+                queue.push(next.value);
+                delete root[next.value];
+            }
+            else
+                next.indegree--;
+            
+            next = next.next;
+        }while(next)
+    };
+
+    let len = input.length;
+    while(queue.length < len){
+        for(let i in root)
+            if(root[i].indegree === 0) indegree0.push(i);
+        while(indegree0.length)
+         {
+            let a= indegree0.shift();
+            dfs(root[a]);
+            console.log(indegree0.length);
+         }   
+    }
+
+    console.log(queue);
+
 }   
